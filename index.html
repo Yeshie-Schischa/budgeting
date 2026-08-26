@@ -7,21 +7,23 @@
 
 <body>
     <main>
-        
+        <ul id="accounts"></ul>
+        <button id="move-money">Move Money</button>
         <div id="form-wrap">
-            <form>
+            <form id="payment">
+                <span id="close">&times;</span>
                 <label for="amount">Amount</label>
-                <input id="amount" type="number">
+                <input id="amount" type="number" required>
                 <label for="listAcounts">Select your account</label>
-                <select id="listAcounts">
+                <select id="listAcounts" required>
                     <option>Shaye Cash</option>
                     <option>G rifky Cash</option>
                 </select>
                 <label for="description">Description</label>
                 <input type="text" id="description">
                 <div id="button-wraper">
-                     <button id="credit">credit</button>
-                     <button id="debit">debit</button>
+                     <button id="credit" >credit</button>
+                     <button id="debit" type="submit">debit</button>
                 </div>
             </form>
         </div>

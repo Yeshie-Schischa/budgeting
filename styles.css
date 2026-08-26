@@ -1,8 +1,25 @@
 form {
     display: flex;
     flex-direction: column;
+    padding: 30px;
 }
 #form-wrap {
     max-width: 600px;
     margin: auto;
+    display: none;
+    position: relative;
+    border: 1px solid black;
+}
+#close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+#accounts {
+    display: flex;
+    justify-content: space-between;
+}
+#accounts li {
+    list-style: none;
 }
