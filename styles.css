@@ -1,16 +1,16 @@
-form {
+form{
     display: flex;
     flex-direction: column;
     padding: 30px;
 }
-#form-wrap {
+#form-wrap-payment {
     max-width: 600px;
     margin: auto;
     display: none;
     position: relative;
     border: 1px solid black;
 }
-#close {
+#close-payment-form {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -22,4 +22,15 @@ form {
 }
 #accounts li {
     list-style: none;
+}
+#form-wrap-account {
+    display: none;
+    position: relative;
+    border: 1px solid black;
+}
+#close-account-form {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
 }

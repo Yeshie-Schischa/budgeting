@@ -8,10 +8,13 @@
 <body>
     <main>
         <ul id="accounts"></ul>
-        <button id="move-money">Move Money</button>
-        <div id="form-wrap">
+        <div id="menu-holder">
+            <button id="move-money">Move Money</button>
+            <button id="add-account">Add Account</button>
+        </div>
+        <div id="form-wrap-payment">
             <form id="payment">
-                <span id="close">&times;</span>
+                <span id="close-payment-form">&times;</span>
                 <label for="amount">Amount</label>
                 <input id="amount" type="number" required>
                 <label for="listAcounts">Select your account</label>
@@ -22,8 +25,19 @@
                 <label for="description">Description</label>
                 <input type="text" id="description">
                 <div id="button-wraper">
-                     <button id="credit" >credit</button>
-                     <button id="debit" type="submit">debit</button>
+                    <button id="credit">credit</button>
+                    <button id="debit">debit</button>
+                </div>
+            </form>
+        </div>
+        <div id="form-wrap-account">
+            <span id="close-account-form">&times;</span>
+            <form id="add-account-form">
+                <label for="name">Account Name</label>
+                <input type="text" id="name" required>
+                <p id="error-msg"></p>
+                <div id="submit-acc-wrap">
+                    <button id="submit-account">Create Account</button>
                 </div>
             </form>
         </div>
