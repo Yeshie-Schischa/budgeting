@@ -49,7 +49,7 @@ const transactions = [];
 const accounts = [
   {
     name: "Shaye Cash",
-    amount: 0
+    amount: 5000
   },
   {
     name: "G rifky Cash",
@@ -64,7 +64,9 @@ const displayAccount = () => {
 }
 displayAccount()
 function credit(account, amount, description = "") {
-  const newBalance = accounts.find(acc => acc.name === account).amount += amount
+  accounts.find(acc => acc.name === account).amount += amount
+  const acc = accounts.find(acc => acc.name === account)
+  const newBalance = acc.amount
   transactions.push({ account, amount, description, type: "credit", newBalance: newBalance })
   pushData(account, amount, description, "credit", newBalance)
 
