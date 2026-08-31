@@ -16,7 +16,32 @@ const closeAccountFormBtn = document.getElementById("close-account-form");
 const submitAccountBtn = document.getElementById("submit-account");
 const formAccount = document.getElementById("add-account-form");
 const accountNameInput = document.getElementById("name");
-const errorMsg = document.getElementById("error-msg")
+const errorMsg = document.getElementById("error-msg");
+
+
+const API = "https://script.google.com/macros/s/AKfycbyTP_zTf5LNnq4Mv9kugsaAfh8Mtto4tKacuZpxtExqCN4hgsUlVwnoNF8dBlOA2Byc/exec";
+
+async function loadData() {
+  const res = await fetch(API);
+  const data = await res.json();
+  console.log(data); // all rows
+}
+loadData();
+
+async function pushData(name, amount, description, type, newBalance) {
+  const fd = new FormData();
+  // your fields here…
+
+  const r = await fetch(API, {
+    method: "POST",
+    body: {value: [name, amount,  description, type, newBalance]}
+  });
+
+  console.log(await r.json());
+}
+pushData("shaye cash", "1300", "trump", "credit", 4500)
+
+
 
 const transactions = [];
 const accounts = [
