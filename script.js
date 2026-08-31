@@ -26,21 +26,23 @@ async function loadData() {
   const data = await res.json();
   console.log(data); // all rows
 }
-loadData();
+
 
 async function pushData(name, amount, description, type, newBalance) {
   const fd = new FormData();
   // your fields here…
-
+  fd.append("account", name)
+  fd.append("amount", amount)
+  fd.append("description", description)
+  fd.append("type", type)
+  fd.append("newBalance", newBalance)
   const r = await fetch(API, {
     method: "POST",
-    body: {value: [name, amount,  description, type, newBalance]}
+    body: fd
   });
 
   console.log(await r.json());
 }
-pushData("shaye cash", "1300", "trump", "credit", 4500)
-
 
 
 const transactions = [];
@@ -64,12 +66,13 @@ displayAccount()
 function credit(account, amount, description = "") {
   const newBalance = accounts.find(acc => acc.name === account).amount += amount
   transactions.push({ account, amount, description, type: "credit", newBalance: newBalance })
+  pushData(account, amount, description, "credit", newBalance)
 
 }
 // this is a new command
 function debit(account, amount, description = "") {
   const newBalance = accounts.find(acc => acc.name === account).amount -= amount
-  transactions.push({ account, amount, description, type: "debit", newBalance: newBalance })
+  transactions.push({ account, amount, description, type: "debit", newBalance })
 
 }
 
