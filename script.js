@@ -22,6 +22,9 @@ const errorMsg = document.getElementById("error-msg");
 const API = "https://script.google.com/macros/s/AKfycbyTP_zTf5LNnq4Mv9kugsaAfh8Mtto4tKacuZpxtExqCN4hgsUlVwnoNF8dBlOA2Byc/exec";
 
 async function loadDataIntoTransactions() {
+
+
+
   const res = await fetch(API);
   const data = await res.json();
   console.log(data); // all rows
@@ -86,17 +89,17 @@ function debit(account, amount, description = "") {
 }
 
 
-creditButton.addEventListener("click", (e) => {
+creditButton.addEventListener("click", async (e) => {
   e.preventDefault()
   if (!formPayment.reportValidity()) {
     return
   }
-  const newBalance = credit(listAcounts.value, Number(amountField.value), descriptionField.value)
+  await credit(listAcounts.value, Number(amountField.value), descriptionField.value);
   //ul.insertAdjacentHTML("beforeend", `<li>Amount: ${Number(amountField.value)} Description: ${descriptionField.value} Account: ${listAcounts.value} New Balance: ${transactions[transactions.length - 1].newBalance}</li>`)
   listAcounts.value = "";
   amountField.value = "";
   descriptionField.value = "";
-  loadDataIntoTransactions()
+  await loadDataIntoTransactions()
   formWrapPayment.style.display = "none";
   moveMoneyBtn.style.display = "inline-block"
 });

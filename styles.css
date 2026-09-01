@@ -39,3 +39,15 @@ form{
     margin: auto;
     background-color: blanchedalmond;
 }
+#transactions ul {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+}
+#transactions li {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid black;
+}
