@@ -26,7 +26,7 @@ async function loadDataIntoTransactions() {
   const data = await res.json();
   console.log(data); // all rows
   ul.innerHTML = ""
-  data.forEach(each => {
+  data.reverse().forEach(each => {
     ul.innerHTML += `<li>Amount: ${each.amount}
        Description: ${each.description}
        Account: ${each.account}
