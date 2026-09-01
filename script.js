@@ -69,7 +69,7 @@ const accounts = [
 const displayAccount = () => {
   accountsElement.innerHTML = ""
   accounts.forEach(account => {
-    accountsElement.innerHTML += `<li>${account.name}${account.amount}</li>`
+    accountsElement.innerHTML += `<li>${account.name}<br>${account.amount}</li>`
   })
 }
 displayAccount()
@@ -83,11 +83,12 @@ function credit(account, amount, description = "") {
 }
 // this is a new command
 function debit(account, amount, description = "") {
-  const newBalance = accounts.find(acc => acc.name === account).amount -= amount
-  transactions.push({ account, amount, description, type: "debit", newBalance })
-
+  accounts.find(acc => acc.name === account).amount -= amount
+  const acc = accounts.find(acc => acc.name === account)
+  const newBalance = acc.amount
+  //transactions.push({ account, amount, description, type: "debit", newBalance: newBalance })
+  pushData(account, amount, description, "debit", newBalance)
 }
-
 
 creditButton.addEventListener("click", async (e) => {
   e.preventDefault()
@@ -104,16 +105,19 @@ creditButton.addEventListener("click", async (e) => {
   moveMoneyBtn.style.display = "inline-block"
 });
 
-debitButton.addEventListener("click", (e) => {
+debitButton.addEventListener("click", async (e) => {
   e.preventDefault()
   if (!formPayment.reportValidity()) {
     return
   }
-  const newBalance = debit(listAcounts.value, Number(amountField.value), descriptionField.value)
-  ul.insertAdjacentHTML("beforeend", `<li>Amount: ${Number(amountField.value)} Description: ${descriptionField.value} Account: ${listAcounts.value} New Balance: ${transactions[transactions.length - 1].newBalance}</li>`)
+  await debit(listAcounts.value, Number(amountField.value), descriptionField.value)
+  //ul.insertAdjacentHTML("beforeend", `<li>Amount: ${Number(amountField.value)} Description: ${descriptionField.value} Account: ${listAcounts.value} New Balance: ${transactions[transactions.length - 1].newBalance}</li>`)
   listAcounts.value = "";
   amountField.value = "";
   descriptionField.value = "";
+  await loadDataIntoTransactions()
+  formWrapPayment.style.display = "none";
+  moveMoneyBtn.style.display = "inline-block"
 });
 
 submitAccountBtn.addEventListener("click", (e) => {

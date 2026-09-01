@@ -18,10 +18,21 @@ form{
 }
 #accounts {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    background-color: blanchedalmond;
+    max-width: 900px;
+    margin: auto;
+    padding: 0px;
 }
 #accounts li {
     list-style: none;
+    padding: 10px;
+    border: 1px solid black;
+    background-color: white;
+    border-radius: 5px;
+    min-width: 120px;
+    aspect-ratio: 1/0.9;
+    margin: 10px;
 }
 #form-wrap-account {
     display: none;
