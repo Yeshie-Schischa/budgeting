@@ -34,3 +34,8 @@ form{
     right: 10px;
     cursor: pointer;
 }
+#transactions {
+    max-width: 900px;
+    margin: auto;
+    background-color: blanchedalmond;
+}

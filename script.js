@@ -21,12 +21,19 @@ const errorMsg = document.getElementById("error-msg");
 
 const API = "https://script.google.com/macros/s/AKfycbyTP_zTf5LNnq4Mv9kugsaAfh8Mtto4tKacuZpxtExqCN4hgsUlVwnoNF8dBlOA2Byc/exec";
 
-async function loadData() {
+async function loadDataIntoTransactions() {
   const res = await fetch(API);
   const data = await res.json();
   console.log(data); // all rows
+  ul.innerHTML = ""
+  data.forEach(each => {
+    ul.innerHTML += `<li>Amount: ${each.amount}
+       Description: ${each.description}
+       Account: ${each.account}
+       New Balance: ${each.newBalance}</li>`
+  })
 }
-
+loadDataIntoTransactions()
 
 async function pushData(name, amount, description, type, newBalance) {
   const fd = new FormData();
@@ -67,7 +74,7 @@ function credit(account, amount, description = "") {
   accounts.find(acc => acc.name === account).amount += amount
   const acc = accounts.find(acc => acc.name === account)
   const newBalance = acc.amount
-  transactions.push({ account, amount, description, type: "credit", newBalance: newBalance })
+  //transactions.push({ account, amount, description, type: "credit", newBalance: newBalance })
   pushData(account, amount, description, "credit", newBalance)
 
 }
@@ -85,10 +92,13 @@ creditButton.addEventListener("click", (e) => {
     return
   }
   const newBalance = credit(listAcounts.value, Number(amountField.value), descriptionField.value)
-  ul.insertAdjacentHTML("beforeend", `<li>Amount: ${Number(amountField.value)} Description: ${descriptionField.value} Account: ${listAcounts.value} New Balance: ${transactions[transactions.length - 1].newBalance}</li>`)
+  //ul.insertAdjacentHTML("beforeend", `<li>Amount: ${Number(amountField.value)} Description: ${descriptionField.value} Account: ${listAcounts.value} New Balance: ${transactions[transactions.length - 1].newBalance}</li>`)
   listAcounts.value = "";
   amountField.value = "";
   descriptionField.value = "";
+  loadDataIntoTransactions()
+  formWrapPayment.style.display = "none";
+  moveMoneyBtn.style.display = "inline-block"
 });
 
 debitButton.addEventListener("click", (e) => {
@@ -127,16 +137,13 @@ accountNameInput.addEventListener("input", ()=>{
   }
 })
 
-function displayTransactions() {
+// function displayTransactions() {
 
-  transactions.forEach(transaction => {
-    ul.innerHTML = `<li>Amount: ${transaction.amount}
-       Description: ${transaction.description}
-       Account: ${transaction.account}
-       New Balance: ${transaction.newBalance}</li>`
-  })
-}
-displayTransactions()
+//   transactions.forEach(transaction => {
+    
+//   })
+// }
+// displayTransactions()
 
 moveMoneyBtn.addEventListener("click", () => {
   formWrapPayment.style.display = "block";
