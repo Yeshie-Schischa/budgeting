@@ -17,9 +17,9 @@ const submitAccountBtn = document.getElementById("submit-account");
 const formAccount = document.getElementById("add-account-form");
 const accountNameInput = document.getElementById("name");
 const errorMsg = document.getElementById("error-msg");
+const loadingSpinHolder = document.getElementById("loading-spin-holder");
 
-
-const API = "https://script.google.com/macros/s/AKfycbyTP_zTf5LNnq4Mv9kugsaAfh8Mtto4tKacuZpxtExqCN4hgsUlVwnoNF8dBlOA2Byc/exec";
+const API = "https://script.google.com/macros/s/AKfycbw4vGJrrart-4GSJcZOTUMBrkwA4waAE3pVjvdwuMvw2_iUI8EYGO9fhZD0qMyoLAFX/exec";
 
 async function loadDataIntoTransactions() {
 
@@ -51,7 +51,7 @@ async function pushData(name, amount, description, type, newBalance) {
     body: fd
   });
 
-  console.log(await r.json());
+  return await r.json();
 }
 
 
@@ -78,7 +78,7 @@ function credit(account, amount, description = "") {
   const acc = accounts.find(acc => acc.name === account)
   const newBalance = acc.amount
   //transactions.push({ account, amount, description, type: "credit", newBalance: newBalance })
-  pushData(account, amount, description, "credit", newBalance)
+  return pushData(account, amount, description, "credit", newBalance)
 
 }
 // this is a new command
@@ -95,14 +95,17 @@ creditButton.addEventListener("click", async (e) => {
   if (!formPayment.reportValidity()) {
     return
   }
-  await credit(listAcounts.value, Number(amountField.value), descriptionField.value);
+  loadingSpinHolder.style.display = "block";
+  const callCredit = await credit(listAcounts.value, Number(amountField.value), descriptionField.value);
   //ul.insertAdjacentHTML("beforeend", `<li>Amount: ${Number(amountField.value)} Description: ${descriptionField.value} Account: ${listAcounts.value} New Balance: ${transactions[transactions.length - 1].newBalance}</li>`)
+  
   listAcounts.value = "";
   amountField.value = "";
   descriptionField.value = "";
-  await loadDataIntoTransactions()
   formWrapPayment.style.display = "none";
   moveMoneyBtn.style.display = "inline-block"
+  ul.insertAdjacentHTML("afterbegin", `<li>Amount: ${callCredit.row[1]} Description: ${callCredit.row[2]} Account: ${callCredit.row[0]} New Balance: ${callCredit.row[4]}</li>`)
+  loadingSpinHolder.style.display = "none";
 });
 
 debitButton.addEventListener("click", async (e) => {
