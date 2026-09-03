@@ -19,7 +19,7 @@ const accountNameInput = document.getElementById("name");
 const errorMsg = document.getElementById("error-msg");
 const loadingSpinHolder = document.getElementById("loading-spin-holder");
 
-const API = "https://script.google.com/macros/s/AKfycbw4vGJrrart-4GSJcZOTUMBrkwA4waAE3pVjvdwuMvw2_iUI8EYGO9fhZD0qMyoLAFX/exec";
+const API = "https://script.google.com/macros/s/AKfycbwGfAHtydrI5rUKOISxqEhosftSiiFpPpVjad96ATFLlJYS8dWK8hKZKlW6DYFi5g6a/exec";
 
 async function loadDataIntoTransactions() {
 
@@ -30,10 +30,12 @@ async function loadDataIntoTransactions() {
   console.log(data); // all rows
   ul.innerHTML = ""
   data.reverse().forEach(each => {
-    ul.innerHTML += `<li>Amount: ${each.amount}
-       Description: ${each.description}
-       Account: ${each.account}
-       New Balance: ${each.newBalance}</li>`
+    ul.innerHTML += `<li>
+    <span class="account-name">${each.account}</span>
+    <span class="amount">€${each.amount}</span>
+    <span class="description">${each.description}</span>
+    <span class="new-balance">€${each.newBalance}</span>
+    </li>`
   })
 }
 loadDataIntoTransactions()
@@ -96,6 +98,7 @@ creditButton.addEventListener("click", async (e) => {
     return
   }
   loadingSpinHolder.style.display = "block";
+  formWrapPayment.style.display = "none";
   const callCredit = await credit(listAcounts.value, Number(amountField.value), descriptionField.value);
   //ul.insertAdjacentHTML("beforeend", `<li>Amount: ${Number(amountField.value)} Description: ${descriptionField.value} Account: ${listAcounts.value} New Balance: ${transactions[transactions.length - 1].newBalance}</li>`)
   
@@ -104,7 +107,11 @@ creditButton.addEventListener("click", async (e) => {
   descriptionField.value = "";
   formWrapPayment.style.display = "none";
   moveMoneyBtn.style.display = "inline-block"
-  ul.insertAdjacentHTML("afterbegin", `<li>Amount: ${callCredit.row[1]} Description: ${callCredit.row[2]} Account: ${callCredit.row[0]} New Balance: ${callCredit.row[4]}</li>`)
+  ul.insertAdjacentHTML("afterbegin", `<li>
+    <span class="account-name">${callCredit.row[0]}</span>
+    <span class="amount">€${callCredit.row[1]}</span>
+    <span class="description">${callCredit.row[2]}</span>
+    <span class="new-balance">€${callCredit.row[4]}</span></li>`)
   loadingSpinHolder.style.display = "none";
 });
 
@@ -170,9 +177,4 @@ addAccountBtn.addEventListener("click", () => {
 });
 closeAccountFormBtn.addEventListener("click", () => {
   formWrapAccount.style.display = "none"
-})
-// to delete
-const tester = document.getElementById("tester")
-tester.addEventListener("click", () => {
-  console.log(transactions)
 })
